@@ -423,6 +423,8 @@ vgarom_setup(void)
     foreachpci(pci) {
         if (!is_pci_vga(pci))
             continue;
+        if (pci->vendor == 0x10de) /* If vendor is nvidia */
+            break; /* Do not load corrupted VGA bios */
         vgahook_setup(pci);
         init_pcirom(pci, 1, NULL);
         break;
